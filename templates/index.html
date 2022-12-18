@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Web Project</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h2>My Web App</h2>
+
+    <div class="row">
+        <div class="column">
+            <h3>Users</h3>
+            <p>This is a list of all the users in the system.</p>
+            <ul id="users">
+            </ul>
+        </div>
+        <div class="column">
+            <h3>Products</h3>
+            <p>This is a list of all the products in the system.</p>
+            <ul id="products">
+            </ul>
+        </div>
+        <div class="column">
+            <h3>Orders</h3>
+            <p>This is a list of all the orders in the system.</p>
+            <ul id="orders">
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Fetch users
+        fetch('http://localhost:5000/users')
+            .then(res => res.json())
+            .then(data => {
+                let output = '<h3>Users</h3>';
+                data.users.forEach(user => {
+                    output += `
+                        <ul>
+                            <li>ID: ${user.id}</li>
+                            <li>Name: ${user.name}</li>
+                            <li>Email: ${user.email}</li>
+                            <li>Age: ${user.age}</li>
+                        </ul>
+                    `;
+                });
+                document.getElementById('users').innerHTML = output;
+            });
+    
+        // Fetch products
+        fetch('http://localhost:5000/products')
+            .then(res => res.json())
+            .then(data => {
+                let output = '<h3>Products</h3>';
+                data.products.forEach(product => {
+                    output += `
+                        <ul>
+                            <li>ID: ${product.id}</li>
+                            <li>Name: ${product.name}</li>
+                            <li>Description: ${product.description}</li>
+                            <li>Price: ${product.price}</li>
+                        </ul>
+                    `;
+                });
+                document.getElementById('products').innerHTML = output;
+            });
+    
+        // Fetch orders
+        fetch('http://localhost:5000/orders')
+            .then(res => res.json())
+            .then(data => {
+                let output = '<h3>Orders</h3>';
+                data.orders.forEach(order => {
+                    output += `
+                        <ul>
+                            <li>ID: ${order.id}</li>
+                            <li>User ID: ${order.user_id}</li>
+                            <li>Product ID: ${order.product_id}</li>
+                            <li>Quantity: ${order.quantity}</li>
+                        </ul>
+                    `;
+                });
+                document.getElementById('orders').innerHTML = output;
+            });
+    </script>
+
+</body>
+</html>
